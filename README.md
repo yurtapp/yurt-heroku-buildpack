@@ -1,6 +1,6 @@
 # Heroku Buildpack for `yurt`
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for [`yurt`](https://github.com/abhchand/yurt).
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for [`yurt`](https://github.com/yurtapp/yurt).
 
 Runs the following:
 
@@ -11,5 +11,5 @@ Runs the following:
 ## Usage
 
 ```bash
-heroku buildpacks:set https://github.com/abhchand/yurt-heroku-buildpack.git
+heroku buildpacks:set https://github.com/yurtapp/yurt-heroku-buildpack.git
 ```
