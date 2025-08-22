@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+BP_DIR=$(cd $(dirname $0); cd ..; pwd)
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+source $BP_DIR/lib/common.sh
+
+cd $BUILD_DIR
+echo "Running from $BUILD_DIR" | indent
+
+if [ -f $BUILD_DIR/webpack.config.js ]; then
+
+  if [ -d "$ENV_DIR" ]; then
+    echo "Exporting config vars to environment" | indent
+    export_env_dir $ENV_DIR
+  fi
+
+  # The assumption is that `heroku/nodejs` buildpack runs before this and
+  # installs `node` and `yarn`
+  echo "Running 'yarn install'"
+  yarn install
+
+  echo "Exporting I18n translations" | indent
+  bundle exec i18n export --config ./app/frontend/locales/config.yml
+
+  echo "Running webpack build" | indent
+  yarn run build:prod
+else
+  echo "No webpack config found" | indent
+fi
